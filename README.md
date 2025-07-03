@@ -1202,6 +1202,74 @@ Imagine o seguinte cenário após aplicar filtros:
 
 ---
 
+## ✅ Etapa 32 - Como utilizar o código para Prever o churn
+
+Aqui está um bloco completo e pronto para rodar em um notebook Python (Google Colab ou Jupyter), que:
+
+1. Cria uma nova entrada de cliente;
+
+2. Carrega os arquivos do modelo (modelo_rf.joblib) e do pré-processador (preprocessor.joblib);
+
+3. Faz o pré-processamento da entrada;
+
+4. Aplica o modelo para prever probabilidade e decisão de churn;
+
+5. Mostra o resultado com base em um threshold ajustável.
+
+✅ 📦 Bloco de Código: Previsão de Churn para Novo Cliente
+
+```bash
+import pandas as pd
+import joblib
+
+# === 1. Nova entrada de cliente ===
+nova_entrada = pd.DataFrame([{
+    'id_cliente': '9999-TESTE',
+    'gender': 'Female',
+    'SeniorCitizen': 0,
+    'Partner': 'Yes',
+    'Dependents': 'No',
+    'tenure': 5,
+    'PhoneService': 'Yes',
+    'MultipleLines': 'No',
+    'InternetService': 'Fiber optic',
+    'OnlineSecurity': 'No', # Added missing column with a default value
+    'OnlineBackup': 'Yes',
+    'DeviceProtection': 'Yes',
+    'TechSupport': 'No',
+    'StreamingTV': 'Yes',
+    'StreamingMovies': 'Yes',
+    'Contract': 'Month-to-month',
+    'PaperlessBilling': 'Yes',
+    'PaymentMethod': 'Electronic check',
+    'valor_mensal': 89.9,
+    'valor_total': 450.3
+}])
+
+# === 2. Carregar pré-processador e modelo salvos ===
+preprocessor = joblib.load('preprocessor.joblib')
+modelo_rf = joblib.load('modelo_rf.joblib')
+
+# === 3. Aplicar pré-processamento na nova entrada ===
+nova_entrada_prep = preprocessor.transform(nova_entrada)
+
+# === 4. Prever a probabilidade de churn ===
+prob_churn = modelo_rf.predict_proba(nova_entrada_prep)[0, 1]
+
+# === 5. Definir threshold para converter em churn (ex: 0.4) ===
+threshold = 0.4
+churn_predito = int(prob_churn >= threshold)
+
+# === 6. Mostrar o resultado final ===
+print(f"Probabilidade de Churn: {prob_churn:.2f}")
+print("Resultado Final:", "⚠️ Churn" if churn_predito == 1 else "✅ Não Churn")
+```
+## Saída: 
+
+Probabilidade de Churn: 0.69
+
+Resultado Final: ⚠️ Churn
+
 ## ✅ Conclusão
 
 O painel fornece uma maneira poderosa e visual de analisar o churn por segmento, facilitando a tomada de decisões estratégicas de retenção de clientes com base em dados reais.
