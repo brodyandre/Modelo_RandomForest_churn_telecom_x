@@ -1,3 +1,5 @@
+Previsão de Churn de Cliente com machine learning
+
 # 📊 Projeto: Previsão de Churn - Telecom X - com Random Forest e Deploy no Streamlit
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repositório-24292e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/brodyandre/churn_telecomx)
